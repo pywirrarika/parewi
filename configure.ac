@@ -1,5 +1,6 @@
 AC_INIT([Parewi Educational Platform], [0.0.1], [libresoft.cuautitlan@gmail.com], [parewi])
 
+
 AC_PREREQ([2.62])
 AC_CANONICAL_HOST
 AC_CANONICAL_BUILD
@@ -9,6 +10,7 @@ AM_INIT_AUTOMAKE(foreign)
 AC_CONFIG_SRCDIR([src/main.c])
 AC_CONFIG_HEADERS([config.h])
 AC_CONFIG_MACRO_DIR([m4])
+
 
 NAME_VERSION=$PACKAGE-$VERSION
 
@@ -67,9 +69,27 @@ AC_DEFINE([HAVE_LIBSDL_IMAGE],[1],[Define to 1 if you have the `SDL_image` libra
 CFLAGS="$CFLAGS $SDL_IMAGE_CFLAGS"
 LIBS="$LIBS $SDL_IMAGE_LIBS"
 
+dnl Check for LUA Support: ------------------------------------------------------
 
+AX_PROG_LUA([5.1])
+AX_LUA_HEADERS
+AX_LUA_LIBS
+CFLAGS="$CFLAGS $LUA_INCLUDE"
+LIBS="$LIBS $LUA_LIB"
+echo "Lua libs: $LUA_INCLUDE Lua libs: $LUA_LIB"
+#AX_PROG_LUA([5.1],[],
+#            [
+#                AX_LUA_HEADERS([],[AC_MSG_ERROR([No lua headers found. ])])
+#                AX_LUA_LIBS([],[AC_MSG_ERROR([No lua libs found. ])])
+#                [LIBS="$LIBS $LUA_LIB" ; ]
+#                [CFLAGS="$CFLAGS $LUA_INCLUDE" ; ]
+#                AC_DEFINE(USE_LUA,1,[use lua])
+#            ],
+#            [
+#                AC_MSG_ERROR([No lua found.])
+#            ])
 CFLAGS="$CFLAGS -Wall"
-
+echo "$CFLAGS"
 AC_CONFIG_FILES([
                  Makefile
                  src/Makefile

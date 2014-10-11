@@ -3,6 +3,12 @@
 #include<stdlib.h>
 #include<SDL2/SDL.h>
 #include "SDL_image.h"
+#include <lua.h>
+#include <lualib.h>
+#include <lauxlib.h>
+
+lua_State* l;
+
 
 int
 main(int argc, char **argv)
@@ -20,6 +26,9 @@ main(int argc, char **argv)
     char alo[60] = "";
 
     int quit = 0;
+
+    l = lua_open();
+    luaL_openlibs(l);
 
     if (SDL_Init(SDL_INIT_EVERYTHING) != 0)
     {
@@ -69,12 +78,12 @@ main(int argc, char **argv)
                 quit = 1;
             }
         }
-        start = SDL_GetTicks();
+        start = SDL_GetTicks( );
         SDL_UpdateWindowSurface( win );
     }
 
     SDL_DestroyWindow(win);
     SDL_Quit();
-    printf("Hola Grupo de software libre de la FES Cuautitlán %s\n", DATA_PREFIX);
+    printf("Hola Grupo de software libre de la FES Cuautitlán %s!\n", DATA_PREFIX);
     return 0;
 }
