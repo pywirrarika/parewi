@@ -42,6 +42,32 @@ AM_PATH_SDL2($SDL_VERSION,
 CFLAGS="$CFLAGS $SDL_CFLAGS"
 LIBS="$LIBS $SDL_LIBS"
 
+dnl ---------------------------------------------------------------------------
+dnl In the following checks we attempt to use pkg-config if available, falling
+dnl back to #AC_CHECK_LIB if #PKG_CHECK_MODULES fails.
+dnl ---------------------------------------------------------------------------
+
+dnl Check for SDL_image: ------------------------------------------------------
+
+PKG_CHECK_MODULES([SDL_IMAGE],
+    [SDL_image],
+    ,
+    [  
+      [echo "SDL_IMAGE not found via pkg_config, checking with AC_CHECK_LIB:"]
+      AC_CHECK_LIB([SDL_image],
+	[IMG_Load],
+        ,
+        [AC_MSG_ERROR([SDL_image not found! http://www.libsdl.org/projects/SDL_image])]
+      )
+      [echo "SDL_IMAGE successfully located"]
+    ]
+)
+
+AC_DEFINE([HAVE_LIBSDL_IMAGE],[1],[Define to 1 if you have the `SDL_image` library])
+CFLAGS="$CFLAGS $SDL_IMAGE_CFLAGS"
+LIBS="$LIBS $SDL_IMAGE_LIBS"
+
+
 CFLAGS="$CFLAGS -Wall"
 
 AC_CONFIG_FILES([
