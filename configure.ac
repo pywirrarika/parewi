@@ -73,6 +73,9 @@ CFLAGS="$CFLAGS -Wall"
 AC_CONFIG_FILES([
                  Makefile
                  src/Makefile
+                 data/Makefile
+                 data/images/Makefile
+                 data/sounds/Makefile
 ])
 
 AC_OUTPUT

@@ -8,8 +8,9 @@ main(int argc, char **argv)
 
     SDL_Window *win = NULL;
     SDL_Event event;
-    SDL_Render *render;
-    SDL_Surface *image;
+    SDL_Renderer *render = NULL;
+    SDL_Surface *image = NULL;
+    SDL_Surface *screen = NULL;
 
     int quit = 0;
 
@@ -26,7 +27,12 @@ main(int argc, char **argv)
         SDL_Quit();
         return 1;
     }
+
+    screen = SDL_GetWindowSurface(win);
+    SDL_FillRect( screen, NULL, SDL_MapRGB(screen->format, 0xFF, 0xFF, 0xFF) );
     
+    //image = IMG_Load(
+   
 
     while(!quit)
     {
@@ -37,10 +43,12 @@ main(int argc, char **argv)
                 quit = 1;
             }
         }
+
+        SDL_UpdateWindowSurface( win );
     }
 
     SDL_DestroyWindow(win);
     SDL_Quit();
-    printf("Hola Grupo de software libre de la FES Cuautitlán\n");
+    printf("Hola Grupo de software libre de la FES Cuautitlán %s\n", DATA_PREFIX);
     return 0;
 }
