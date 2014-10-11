@@ -14,7 +14,7 @@ NAME_VERSION=$PACKAGE-$VERSION
 
 AC_DEFINE_UNQUOTED([PROGRAM_NAME], "$PACKAGE", [Parewi Educational Platform])
 
-AC_SUBSET(NAME_VERSION)
+AC_SUBST(NAME_VERSION)
 
 AC_GNU_SOURCE
 
@@ -27,13 +27,13 @@ LT_INIT
 AC_PROG_CC
 AC_PROG_INSTALL
 AC_PROG_MAKE_SET
-AC_RPOG_MKDIR_P
+AC_PROG_MKDIR_P
 
 # ------------------------------------------------
 # Check for libraries
 # ------------------------------------------------
 
-CFLAGS = "FCFLAGS -Wall"
+CFLAGS = "$CFLAGS -Wall"
 
 AC_CONFIG_FILES([
                  Makefile
