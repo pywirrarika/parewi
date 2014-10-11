@@ -33,7 +33,16 @@ AC_PROG_MKDIR_P
 # Check for libraries
 # ------------------------------------------------
 
-CFLAGS = "$CFLAGS -Wall"
+dnl Check for SDL
+SDL_VERSION=2.0.0
+AM_PATH_SDL2($SDL_VERSION,
+        :,
+        AC_MSG_ERROR([*** SDL version $SDL_VERSION not found!])
+)
+CFLAGS="$CFLAGS $SDL_CFLAGS"
+LIBS="$LIBS $SDL_LIBS"
+
+CFLAGS="$CFLAGS -Wall"
 
 AC_CONFIG_FILES([
                  Makefile
