@@ -1,6 +1,8 @@
 #include<config.h>
 #include<stdio.h>
+#include<stdlib.h>
 #include<SDL2/SDL.h>
+#include "SDL_image.h"
 
 int
 main(int argc, char **argv)
@@ -11,6 +13,11 @@ main(int argc, char **argv)
     SDL_Renderer *render = NULL;
     SDL_Surface *image = NULL;
     SDL_Surface *screen = NULL;
+    int flags;  
+    int initted;
+    int start = 0;
+
+    char alo[60] = "";
 
     int quit = 0;
 
@@ -28,11 +35,30 @@ main(int argc, char **argv)
         return 1;
     }
 
+    // load support for the JPG and PNG image formats
+    flags=IMG_INIT_JPG|IMG_INIT_PNG;
+    initted=IMG_Init(flags);
+    // handle error
+    if(initted&flags != flags) 
+    {
+        printf("IMG_Init: Failed to init required jpg and png support!\n");
+        printf("IMG_Init: %s\n", IMG_GetError());
+    }
     screen = SDL_GetWindowSurface(win);
     SDL_FillRect( screen, NULL, SDL_MapRGB(screen->format, 0xFF, 0xFF, 0xFF) );
-    
-    //image = IMG_Load(
-   
+
+    sprintf(alo, "%s/images/linux.bmp", DATA_PREFIX);
+    printf("%s\n", alo);
+    image = SDL_LoadBMP(alo);
+    if(!image)
+    {
+        printf("Error: couldn't load %s, %s\n", alo, IMG_GetError());
+    }   
+    else
+    {
+        SDL_BlitSurface(image, NULL, screen, NULL);
+    }
+
 
     while(!quit)
     {
@@ -43,7 +69,7 @@ main(int argc, char **argv)
                 quit = 1;
             }
         }
-
+        start = SDL_GetTicks();
         SDL_UpdateWindowSurface( win );
     }
 
