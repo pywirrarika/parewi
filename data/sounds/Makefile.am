@@ -1,0 +1,2 @@
+soundsdir = $(pkgdatadir)/sounds
+
