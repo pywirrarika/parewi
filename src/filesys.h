@@ -28,7 +28,6 @@ char *homedir(void)
     {
             homedir = getpwuid(getuid())->pw_dir;
     }
-    printf("Home dir: %s\n", homedir);
 
     return homedir;
 };

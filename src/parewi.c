@@ -34,6 +34,7 @@ parewi_create_obj(void)
     parewi_object->L = luaL_newstate();
     luaL_openlibs(parewi_object->L);
 
+    printf("Home dir: %s\n", homedir());
     homedir();
     return parewi_object;
 }
