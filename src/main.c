@@ -1,40 +1,56 @@
+/*
+ * main.c
+ *
+ * Description: This is the starting point for the Parewi 
+ *              platform. 
+ *
+ * Authors: Manuel Mager <pywirrarika@gmail.com> (c) 2015
+ * Copyright: GPL v3 or later
+ *
+ */
+
+
 #include<config.h>
 #include<stdio.h>
 #include<stdlib.h>
 #include<SDL2/SDL.h>
+#include<lua.h>
+#include<lualib.h>
+#include<lauxlib.h>
 #include "SDL_image.h"
-#include <lua.h>
-#include <lualib.h>
-#include <lauxlib.h>
+
+#include "parewi.h"
 
 lua_State* l;
-
 
 int
 main(int argc, char **argv)
 {
+    // Local variables
+    int flags;  
+    int initted;
+    int start = 0;
+    int result;
+    char alo[60] = "";
+    int quit = 0;
 
     SDL_Window *win = NULL;
     SDL_Event event;
     SDL_Renderer *render = NULL;
     SDL_Surface *image = NULL;
     SDL_Surface *screen = NULL;
-    int flags;  
-    int initted;
-    int start = 0;
 
-    char alo[60] = "";
+    parewiS *P;
 
-    int quit = 0;
+    P = parewi_create_obj();
 
-    l = lua_open();
-    luaL_openlibs(l);
-
+    // Starting SDL
     if (SDL_Init(SDL_INIT_EVERYTHING) != 0)
     {
         printf("Error initializing SDL: %s", SDL_GetError()); 
         return 1;
     }
+    //Crating the main window handler for SDL
     win = SDL_CreateWindow("Hello FES Cuautitlan!", 100, 100, 640, 480,\
             SDL_WINDOW_SHOWN);
     if(!win)
@@ -61,13 +77,16 @@ main(int argc, char **argv)
     image = SDL_LoadBMP(alo);
     if(!image)
     {
-        printf("Error: couldn't load %s, %s\n", alo, IMG_GetError());
+        fprintf(stderr, "Error: couldn't load %s, %s\n", alo, IMG_GetError());
     }   
     else
     {
         SDL_BlitSurface(image, NULL, screen, NULL);
     }
 
+    result = (luaL_loadfile(P->L, "lua_exp.lua") || lua_pcall(P->L,0,0,0));
+    if(result)
+        fprintf(stderr, "Error: couldn't load LUA Script\n");
 
     while(!quit)
     {

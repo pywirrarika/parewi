@@ -71,24 +71,14 @@ LIBS="$LIBS $SDL_IMAGE_LIBS"
 
 dnl Check for LUA Support: ------------------------------------------------------
 
-AX_PROG_LUA([5.1])
-AX_LUA_HEADERS
-AX_LUA_LIBS
+AX_PROG_LUA([])
+AX_LUA_HEADERS([],[AC_MSG_ERROR([No lua headers found. ])])
 CFLAGS="$CFLAGS $LUA_INCLUDE"
+echo "Lua headers:$LUA_INCLUDE"
+AX_LUA_LIBS
 LIBS="$LIBS $LUA_LIB"
-echo "Lua libs: $LUA_INCLUDE Lua libs: $LUA_LIB"
-#AX_PROG_LUA([5.1],[],
-#            [
-#                AX_LUA_HEADERS([],[AC_MSG_ERROR([No lua headers found. ])])
-#                AX_LUA_LIBS([],[AC_MSG_ERROR([No lua libs found. ])])
-#                [LIBS="$LIBS $LUA_LIB" ; ]
-#                [CFLAGS="$CFLAGS $LUA_INCLUDE" ; ]
-#                AC_DEFINE(USE_LUA,1,[use lua])
-#            ],
-#            [
-#                AC_MSG_ERROR([No lua found.])
-#            ])
-CFLAGS="$CFLAGS -Wall"
+echo "Lua libs: $LUA_LIB"
+# CFLAGS="$CFLAGS -I/usr/local/include"
 echo "$CFLAGS"
 AC_CONFIG_FILES([
                  Makefile
