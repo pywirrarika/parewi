@@ -12,10 +12,15 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#include<lua.h>
+#include<lualib.h>
+#include<lauxlib.h>
+
 #include "parewi.h"
+#include "filesys.h"
 
 parewiS *
-parewi_create(void)
+parewi_create_obj(void)
 {
     parewiS* parewi_object = NULL;
 
@@ -24,6 +29,12 @@ parewi_create(void)
     {
         fprintf(stderr, "Error: allocate memory problem.\n");
     }
+
+    // Starting LUA
+    parewi_object->L = luaL_newstate();
+    luaL_openlibs(parewi_object->L);
+
+    homedir();
     return parewi_object;
 }
 
