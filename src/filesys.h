@@ -33,10 +33,10 @@
 
 #include "parewi.h"
 
-// If the operating system is POSIX
 
 
 gchar *get_home_dir(void);
 int mk_confdir(parewiS *);
-
+int mkdir_if_not_exists(gchar *path);
+int dir_exists(gchar *);
 #endif
