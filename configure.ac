@@ -34,6 +34,10 @@ AC_PROG_MKDIR_P
 # ------------------------------------------------
 # Check for libraries
 # ------------------------------------------------
+dnl Check glib
+PKG_CHECK_MODULES([GLIB], [glib-2.0 >= 2.24.1])
+CFLAGS="$CFLAGS $GLIB_CFLAGS"
+LIBS="$LIBS $GLIB_LIBS"
 
 dnl Check for SDL
 SDL_VERSION=2.0.0

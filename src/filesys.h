@@ -1,9 +1,16 @@
+/*
+ * filesys.h
+ *
+ * Description: Function to work with files. 
+ *
+ * Authors: Manuel Mager <pywirrarika@gmail.com> (c) 2015
+ * Copyright: GPL v3 or later
+ *
+ */
+
 #ifndef FILESYS_H
 #define FILESYS_H
 
-#include <stdlib.h>
-
-// If the operating system is POSIX
 #if !defined(_WIN32) && (defined(__unix__) || defined(__unix) || (defined(__APPLE__) && defined(__MACH__)))
     /* UNIX-style OS. ------------------------------------------- */
 
@@ -20,15 +27,16 @@
 #error This platform is not supported
 #endif
 
-char *homedir(void)
-{
-    char *homedir;
+#include <stdlib.h>
+#include <glib.h>
+#include <glib/gstdio.h>
 
-    if ((homedir = getenv(HOME)) == NULL) 
-    {
-            homedir = getpwuid(getuid())->pw_dir;
-    }
+#include "parewi.h"
 
-    return homedir;
-};
+// If the operating system is POSIX
+
+
+gchar *get_home_dir(void);
+int mk_confdir(parewiS *);
+
 #endif

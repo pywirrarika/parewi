@@ -103,6 +103,7 @@ main(int argc, char **argv)
 
     SDL_DestroyWindow(win);
     SDL_Quit();
+    parewi_free_obj(P); 
     printf("Hola Grupo de software libre de la FES Cuautitlán %s!\n", DATA_PREFIX);
     return 0;
 }

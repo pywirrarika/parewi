@@ -6,12 +6,11 @@ AM_CFLAGS=-Wall -g -DDATA_PREFIX=\"${DATA_PREFIX}\" -DDEBUG \
 DATA_PREFIX=${pkgdatadir}
 
 parewi_SOURCES = 	main.c \
+					filesys.c \
+					game.c \
 					parewi.c
 
 EXTRA_DIST = 		parewi.h \
-					uthash.h \
-					utarray.h \
-					utlist.h \
-					utstring.h \
+					game.h \
 					filesys.h
 
