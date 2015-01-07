@@ -35,8 +35,19 @@ parewi_create_obj(void)
     luaL_openlibs(parewi_object->L);
 
     parewi_object->homedir = get_home_dir();
+
+    parewi_object->games = g_hash_table_new(g_str_hash, g_str_equal);
+
     printf("Home dir: %s\n", parewi_object->homedir);
     mk_confdir(parewi_object);
+
+    parewi_get_games(parewi_object);
+
+    printf("There are %d keys in the hash table\n",
+            g_hash_table_size(parewi_object->games));
+    pGame *game = g_hash_table_lookup(parewi_object->games ,"colors");
+    printf("colors: %s\n", game->dir);
+
     return parewi_object;
 }
 

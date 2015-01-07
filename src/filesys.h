@@ -33,10 +33,11 @@
 
 #include "parewi.h"
 
-
-
 gchar *get_home_dir(void);
 int mk_confdir(parewiS *);
-int mkdir_if_not_exists(gchar *path);
+int mkdir_if_not_exists(gchar *);
 int dir_exists(gchar *);
+GDir *dir_open(gchar *path);
+GDir *parewi_get_games(parewiS *);
+
 #endif
