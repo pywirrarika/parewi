@@ -137,16 +137,18 @@ dir_open(gchar *path)
     return dir;
 }
 
-
-
-GDir *
+int
 parewi_get_games(parewiS *parewi)
 {
     gchar   *game_path;
     gchar   *subdir_path;
     gchar   *subdir_name;
+    gchar   *script_path;
+
     GDir    *dir = NULL;
     pGame   *game;
+    FILE    *script;
+
 
     game_path = g_strjoin("/", parewi->confdir, "games", NULL);
 
@@ -154,7 +156,7 @@ parewi_get_games(parewiS *parewi)
     if(dir == NULL)
     {
         fprintf(stderr, "Couldn't open games configuration directory!\n");
-        return NULL;
+        return -1;
     }
 
     // Read the subdirectories of $HOME/.parewi/games to find
@@ -163,19 +165,32 @@ parewi_get_games(parewiS *parewi)
     while((subdir_name = g_dir_read_name(dir)) != NULL)
     {
         subdir_path = g_strjoin("/", game_path, subdir_name, NULL);
-        
-        game = parewi_create_game(subdir_name, subdir_path, "Comment");
+        script_path = g_strjoin("/", subdir_path, "init.lua", NULL);
+        script = g_fopen(script_path, "r");
+
+        if(script == NULL)
+        {
+            fprintf(stderr, "Error: No game script in %s.\n", subdir_path);
+            free(subdir_path);
+            free(script_path);
+            continue;
+        }
+
+        game = parewi_create_game(subdir_name, subdir_path, "Comment", \
+                script_path);
+
         if(game == NULL)
         {
             fprintf(stderr, "Error creating a new game\n");
-            return NULL;
+            return -1;
         }
         printf("Game name: %s\n", game->name);
 
         // Registrating the game
         // TODO: check the existence of Lua main script
+        
         g_hash_table_insert(parewi->games, game->name, game);
     }
 
-    return 0;
+    return 1;
 }

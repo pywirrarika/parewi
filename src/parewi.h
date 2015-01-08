@@ -19,34 +19,35 @@
 #include<glib.h>
 
 typedef struct parewiS{
-    int         id;
-    int         exp;
-    lua_State   *L;
-    char        *homedir;
-    char        confdir[255];
-    GHashTable  *games;
-
+    int             id;
+    int             exp;
+    lua_State       *L;
+    char            *homedir;
+    char            confdir[255];
+    GHashTable      *games;
+    struct pGame    *currentg; 
 }parewiS;
 
 typedef struct pGame{
-    gchar        *dir;
-    GHashTable   *models; 
-    GHashTable   *objects;
-    gchar        *name;
-    gchar        *comment;
+    gchar           *dir;
+    GHashTable      *models; 
+    GHashTable      *objects;
+    gchar           *name;
+    gchar           *script; 
+    gchar           *comment;
 }pGame;
 
 typedef struct pElement{
-    int          id;
-    gchar        *image_name;
-    gchar        *name;
+    int             id;
+    gchar           *image_name;
+    gchar           *name;
 }pElement;
 
 typedef struct pObject{
-    int          id;
-    SDL_Surface  *image;
-    SDL_Rect     coords;
-    SDL_Rect     blit;
+    int             id;
+    SDL_Surface     *image;
+    SDL_Rect        coords;
+    SDL_Rect        blit;
 }pObject;
 
 parewiS *parewi_create_obj(void);

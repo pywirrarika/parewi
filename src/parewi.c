@@ -41,12 +41,20 @@ parewi_create_obj(void)
     printf("Home dir: %s\n", parewi_object->homedir);
     mk_confdir(parewi_object);
 
-    parewi_get_games(parewi_object);
+    if(!parewi_get_games(parewi_object))
+    {
+        return NULL;
+    }
 
     printf("There are %d keys in the hash table\n",
             g_hash_table_size(parewi_object->games));
+    // TODO: This is only tempraly code
+
     pGame *game = g_hash_table_lookup(parewi_object->games ,"colors");
+    parewi_object->currentg=game;
+
     printf("colors: %s\n", game->dir);
+    // TODO: End tmp code
 
     return parewi_object;
 }

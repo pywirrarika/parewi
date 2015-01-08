@@ -84,7 +84,8 @@ main(int argc, char **argv)
         SDL_BlitSurface(image, NULL, screen, NULL);
     }
 
-    result = (luaL_loadfile(P->L, "lua_exp.lua") || lua_pcall(P->L,0,0,0));
+
+    result = (luaL_loadfile(P->L, P->currentg->script) || lua_pcall(P->L,0,0,0));
     if(result)
         fprintf(stderr, "Error: couldn't load LUA Script\n");
 
