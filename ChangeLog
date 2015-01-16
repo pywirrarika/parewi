@@ -1,0 +1,16 @@
+2015.Jan.15
+
+	* Initial Building
+
+	Automake configuration:
+
+	* SDL2 Lib
+	* SDL-image
+	* LUA
+	* glib
+
+	Code:
+
+	* Basic startup
+	* Configuration directory setup
+	* Game structures
