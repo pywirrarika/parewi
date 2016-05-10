@@ -1,0 +1,1 @@
+podir = $(pkgdatadir)/po

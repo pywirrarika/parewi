@@ -57,19 +57,18 @@ dnl back to #AC_CHECK_LIB if #PKG_CHECK_MODULES fails.
 dnl ---------------------------------------------------------------------------
 
 dnl Check for SDL_image: ------------------------------------------------------
-
 PKG_CHECK_MODULES([SDL_IMAGE],
-    [SDL_image],
-    ,
-    [  
-      [echo "SDL_IMAGE not found via pkg_config, checking with AC_CHECK_LIB:"]
-      AC_CHECK_LIB([SDL_image],
-	[IMG_Load],
-        ,
-        [AC_MSG_ERROR([SDL_image not found! http://www.libsdl.org/projects/SDL_image])]
-      )
-      [echo "SDL_IMAGE successfully located"]
-    ]
+[SDL_image],
+,
+[  
+[echo "SDL_IMAGE not found via pkg_config, checking with AC_CHECK_LIB:"]
+AC_CHECK_LIB([SDL_image],
+[IMG_Load],
+,
+[AC_MSG_ERROR([SDL_image not found! http://www.libsdl.org/projects/SDL_image])]
+)
+[echo "SDL_IMAGE successfully located"]
+]
 )
 
 AC_DEFINE([HAVE_LIBSDL_IMAGE],[1],[Define to 1 if you have the `SDL_image` library])
@@ -78,18 +77,18 @@ LIBS="$LIBS $SDL_IMAGE_LIBS"
 
 dnl Check for SDL_mixer: --------------------------------------------------------
 
-PKG_CHECK_MODULES([SDL_MIXER],
-    [SDL_mixer],
+PKG_CHECK_MODULES([SDL2_MIXER],
+    [SDL2_mixer],
     [],
-    [AC_MSG_NOTICE([SDL_mixer not located by pkg-config, checking with AC CHECK LIB:])
-    AC_CHECK_LIB([SDL_mixer],
+    [AC_MSG_NOTICE([SDL2_mixer not located by pkg-config, checking with AC CHECK LIB:])
+    AC_CHECK_LIB([SDL2_mixer],
         [Mix_OpenAudio],
         [],
-        [AC_MSG_ERROR([SDL_mixer not found! http://www.libsdl.org/projects/SDL_mixer])])])
+        [AC_MSG_ERROR([SDL2_mixer not found! http://www.libsdl.org/projects/SDL_mixer])])])
 
-AC_DEFINE([HAVE_LIBSDL_MIXER],[1],[Define to 1 if you have the 'SDL_mixer' library])
-CFLAGS="$CFLAGS $SDL_MIXER_CFLAGS"
-LIBS="$LIBS $SDL_MIXER_LIBS"
+AC_DEFINE([HAVE_LIBSDL_MIXER],[1],[Define to 1 if you have the 'SDL2_mixer' library])
+CFLAGS="$CFLAGS $SDL2_MIXER_CFLAGS"
+LIBS="$LIBS $SDL2_MIXER_LIBS"
 
 
 dnl Check for LUA Support: ------------------------------------------------------
@@ -178,19 +177,19 @@ AC_CHECK_LIB([ws2_32],
 	     [AC_MSG_NOTICE([Windows socket library ws2_32 not found - (only needed on win32)])])
 
 
-PKG_CHECK_MODULES([SDL_NET],
-	[SDL_net],
+PKG_CHECK_MODULES([SDL2_NET],
+	[SDL2_net],
 	[],
-	[AC_MSG_NOTICE([SDL_net not located by pkg-config, checking with AC CHECK LIB:])
-	 AC_CHECK_LIB([SDL_net],
+	[AC_MSG_NOTICE([SDL2_net not located by pkg-config, checking with AC CHECK LIB:])
+	 AC_CHECK_LIB([SDL2_net],
 		[SDLNet_Init],
 		[],
-		[AC_MSG_FAILURE([SDL_net test failed (--without-sdlnet to disable)])])])
+		[AC_MSG_FAILURE([SDL2_net test failed (--without-sdlnet to disable)])])])
 
-AC_DEFINE([HAVE_LIBSDL_NET],[1],[Define to 1 if you have the 'SDL_net' library])
-CFLAGS="$CFLAGS $SDL_NET_CFLAGS"
-LIBS="$LIBS $SDL_NET_LIBS"
-DEP_LIBS="$DEP_LIBS -lSDL_net"
+AC_DEFINE([HAVE_LIBSDL_NET],[1],[Define to 1 if you have the 'SDL2_net' library])
+CFLAGS="$CFLAGS $SDL2_NET_CFLAGS"
+LIBS="$LIBS $SDL2_NET_LIBS"
+DEP_LIBS="$DEP_LIBS -lSDL2_net"
 fi
 
 
@@ -310,7 +309,7 @@ AC_CONFIG_FILES([
                  data/Makefile
                  data/images/Makefile
                  data/sounds/Makefile
-                 po/Makefile.in
+                 po/Makefile
 ])
 
 AC_OUTPUT
